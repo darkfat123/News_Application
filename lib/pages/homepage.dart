@@ -11,11 +11,21 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Text("หน้าหลัก"), Icon(Icons.menu_rounded)],
+        title: Container(
+          padding: EdgeInsets.symmetric(vertical:24),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("หน้าหลัก",style: TextStyle(fontSize: 24,fontWeight: FontWeight.bold),),
+              IconButton(
+                icon: Icon(Icons.menu_rounded,size: 30,),
+                onPressed: () {
+                  print("Icon had pressed!");
+                },
+              )
+            ],
+          ),
         ),
       ),
       body: Column(children: []),
