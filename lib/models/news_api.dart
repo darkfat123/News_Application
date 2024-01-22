@@ -1,43 +1,43 @@
-import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class NewsApiService {
-  final String apiKey = "2a062b05d3424b8ea2bfc6d1eb328133";
-  final String baseUrl = "https://newsapi.org/v2/top-headlines";
+class NewsService {
+  List<Map<String, dynamic>> news_data = [];
 
-  final _newsStreamController = StreamController<List<Map<String, dynamic>>>();
+  Future<List<Map<String, dynamic>>> fetchNews() async {
+    final response = await http.get(Uri.parse(
+        'https://newsapi.org/v2/top-headlines?country=us&apiKey=2a062b05d3424b8ea2bfc6d1eb328133'));
 
-  Stream<List<Map<String, dynamic>>> get newsStream => _newsStreamController.stream;
+    if (response.statusCode == 200) {
+      final dynamic decodedData = json.decode(utf8.decode(response.bodyBytes));
+      if (decodedData is Map<String, dynamic>) {
+        news_data.add(decodedData);
 
-  Future<void> fetchNews() async {
-    const String country = "us";
-    const String category = "business";
+        // Check if 'articles' key exists
+        if (decodedData.containsKey('articles')) {
+          List<Map<String, dynamic>> articles =
+              List<Map<String, dynamic>>.from(decodedData['articles']);
 
-    final String apiUrl = "$baseUrl?country=$country&category=$category&apiKey=$apiKey";
+          // Filter articles where 'urlToImage' is not null
+          articles = articles
+              .where((article) =>
+                  article.containsKey('urlToImage') &&
+                  article['urlToImage'] != null)
+              .toList();
 
-    try {
-      final response = await http.get(Uri.parse(apiUrl));
+          for (Map<String, dynamic> article in articles) {
+            print(article['urlToImage']);
+          }
 
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> data = json.decode(response.body);
-
-        if (data.containsKey('articles')) {
-          final List<dynamic> articles = data['articles'];
-          final List<Map<String, dynamic>> formattedArticles = List<Map<String, dynamic>>.from(articles);
-          _newsStreamController.add(formattedArticles);
+          return articles;
         } else {
-          throw Exception('Invalid API response format');
+          throw Exception('Key "articles" not found in data');
         }
       } else {
-        throw Exception('Failed to load data');
+        throw Exception('Invalid data format');
       }
-    } catch (error) {
-      throw Exception('Error: $error');
+    } else {
+      throw Exception('Failed to load news');
     }
-  }
-
-  void dispose() {
-    _newsStreamController.close();
   }
 }

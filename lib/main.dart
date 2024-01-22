@@ -19,8 +19,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: "IBMPlexSansThai",
       ),
-      home: const Home(initialIndex: 1),
+      home: const Home(initialIndex: 2),
     );
   }
 }
@@ -50,7 +51,7 @@ class HomeState extends State<Home> {
           });
         },
         backgroundColor: Colors.black,
-        itemPadding: EdgeInsets.symmetric(horizontal:40,vertical: 16),
+        itemPadding: EdgeInsets.symmetric(horizontal:24,vertical: 16),
         items: [
           SalomonBottomBarItem(
             icon: Icon(Elusive.home_circled,size: 30,),
