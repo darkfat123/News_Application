@@ -9,13 +9,13 @@ class USnewsPage extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('ข่าวต่างประเทศ'),
+          title: Center(child: const Text('ข่าวต่างประเทศ')),
         ),
         body: FutureBuilder(
           future: newsService.fetchNews(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else {
@@ -25,23 +25,85 @@ class USnewsPage extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final newsItem = news[index];
                   return Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(width: 4)),
-                      padding: EdgeInsets.all(10),
-                      margin: EdgeInsets.all(20),
+                      margin: const EdgeInsets.all(20),
                       child: Column(children: [
-                        Image.network(newsItem['urlToImage'].toString()),
-                        SizedBox(
+                        ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: AspectRatio(
+                              aspectRatio: 2,
+                              child: Image.network(
+                                newsItem['urlToImage'].toString(),
+                                fit: BoxFit.fill,
+                              ),
+                            )),
+                        const SizedBox(
                           height: 10,
                         ),
-                        Text(newsItem['title']),
-                        SizedBox(
+                        Text(
+                          newsItem['title'],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const SizedBox(
                           height: 10,
                         ),
-                        Text(newsItem['description']),
+                        Text(
+                          newsItem['description'],
+                          style: const TextStyle(
+                            fontSize: 14,
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Row(
-                          children: [Text(newsItem['source']['name'])],
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                newsItem['author'] == null ? Text(
+                                  "Author: " + newsItem['author'],
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                  ),
+                                ) : SizedBox.shrink(),
+                                Text(
+                                  "Source from: " + newsItem['source']['name'],
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    gradient: const LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      end: Alignment.centerRight,
+                                      colors: [
+                                        Color(0xFFFF3A44),
+                                        Color(0xFFFF8086)
+                                      ],
+                                    )),
+                                child: const Text(
+                                  "Read more",
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            )
+                          ],
                         )
                       ]));
                 },

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:news_application/pages/homepage.dart';
 import 'package:icons_flutter/icons_flutter.dart';
 import 'package:news_application/pages/us_news.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -83,13 +82,13 @@ class HomeState extends State<Home> {
     Widget widget;
     switch (index) {
       case 1:
-        widget = Homepage();
+        widget = USnewsPage();
         break;
       case 2:
         widget = USnewsPage();
         break;
       default:
-        widget = Homepage();
+        widget = USnewsPage();
         break;
     }
     return widget;
