@@ -7,7 +7,7 @@ class NewsService {
   String? key = dotenv.env['key'];
 
   Future<List<Map<String, dynamic>>> fetchNews() async {
-    print(key);
+    
     final response = await http.get(Uri.parse(
         'https://newsapi.org/v2/top-headlines?country=us&apiKey=${key}'));
 

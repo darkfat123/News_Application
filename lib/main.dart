@@ -18,8 +18,6 @@ class MyApp extends StatelessWidget {
       title: 'News_Application',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: "IBMPlexSansThai",
       ),
       home: const Home(initialIndex: 2),
@@ -44,7 +42,7 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: SalomonBottomBar(
+      bottomNavigationBar: BottomNavigationBar(
         currentIndex: index,
         onTap: (value) {
           setState(() {
@@ -52,19 +50,18 @@ class HomeState extends State<Home> {
           });
         },
         backgroundColor: Colors.black,
-        itemPadding: EdgeInsets.symmetric(horizontal:24,vertical: 16),
-        items: [
-          SalomonBottomBarItem(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
             icon: Icon(Elusive.home_circled,size: 30,),
-            title: Text('หน้าหลัก'),
+            label: 'หน้าหลัก',
           ),
-          SalomonBottomBarItem(
+          BottomNavigationBarItem(
             icon: Icon(Elusive.address_book,size: 30,),
-            title: Text('หน้าหลัก'),
+            label: 'หน้าหลัก',
           ),
-          SalomonBottomBarItem(
+          BottomNavigationBarItem(
             icon: Icon(Elusive.reddit,size: 30,),
-            title: Text('หน้าหลัก'),
+            label: 'หน้าหลัก',
             
           ),
         ],

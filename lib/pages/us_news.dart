@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:news_application/models/format.dart';
 import 'package:news_application/models/news_api.dart';
+import 'package:news_application/pages/us_news_detail.dart';
+import 'package:news_application/widgets/gradient_text.dart';
 
 class USnewsPage extends StatelessWidget {
   final NewsService newsService = NewsService();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
-          title: Center(child: const Text('ข่าวต่างประเทศ')),
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          title: const Center(
+            child: GradientText(
+              'ข่าวต่างประเทศ',
+              style: TextStyle(fontWeight: FontWeight.bold),
+              gradient: LinearGradient(
+                  colors: [Color(0xFFFF3A44), Color(0xFFFF8086)]),
+            ),
+          ),
         ),
         body: FutureBuilder(
           future: newsService.fetchNews(),
@@ -33,11 +45,25 @@ class USnewsPage extends StatelessWidget {
                               aspectRatio: 2,
                               child: Image.network(
                                 newsItem['urlToImage'].toString(),
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                               ),
                             )),
                         const SizedBox(
-                          height: 10,
+                          height: 16,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              formatDate(newsItem['publishedAt']),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 12,
                         ),
                         Text(
                           newsItem['title'],
@@ -47,7 +73,7 @@ class USnewsPage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 12,
                         ),
                         Text(
                           newsItem['description'],
@@ -56,7 +82,7 @@ class USnewsPage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(
-                          height: 10,
+                          height: 12,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,13 +90,15 @@ class USnewsPage extends StatelessWidget {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                newsItem['author'] == null ? Text(
-                                  "Author: " + newsItem['author'],
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 12,
-                                  ),
-                                ) : SizedBox.shrink(),
+                                newsItem['author'] != null
+                                    ? Text(
+                                        "Author: " + newsItem['author'],
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                        ),
+                                      )
+                                    : SizedBox.shrink(),
                                 Text(
                                   "Source from: " + newsItem['source']['name'],
                                   style: const TextStyle(
@@ -81,7 +109,13 @@ class USnewsPage extends StatelessWidget {
                               ],
                             ),
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => USDetailPage(newsItem))
+                                );
+                              },
                               child: Container(
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
@@ -95,7 +129,7 @@ class USnewsPage extends StatelessWidget {
                                       ],
                                     )),
                                 child: const Text(
-                                  "Read more",
+                                  "อ่านเพิ่มเติม",
                                   style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.white,
@@ -111,7 +145,7 @@ class USnewsPage extends StatelessWidget {
             }
           },
         ),
-      ),
-    );
+      );
+    
   }
 }
