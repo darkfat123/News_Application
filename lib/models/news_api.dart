@@ -1,12 +1,15 @@
 import 'dart:convert';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class NewsService {
   List<Map<String, dynamic>> news_data = [];
+  String? key = dotenv.env['key'];
 
   Future<List<Map<String, dynamic>>> fetchNews() async {
+    print(key);
     final response = await http.get(Uri.parse(
-        'https://newsapi.org/v2/top-headlines?country=us&apiKey=2a062b05d3424b8ea2bfc6d1eb328133'));
+        'https://newsapi.org/v2/top-headlines?country=us&apiKey=${key}'));
 
     if (response.statusCode == 200) {
       final dynamic decodedData = json.decode(utf8.decode(response.bodyBytes));

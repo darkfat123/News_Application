@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:icons_flutter/icons_flutter.dart';
 import 'package:news_application/pages/us_news.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: "key.env");
   runApp(const MyApp());
 }
 
