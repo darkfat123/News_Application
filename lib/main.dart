@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:icons_flutter/icons_flutter.dart';
-import 'package:news_application/pages/us_news.dart';
+import 'package:news_application/pages/home_page.dart';
+import 'package:news_application/pages/th_main_news.dart';
+import 'package:news_application/pages/us_main_news.dart';
+
 
 Future<void> main() async {
   await dotenv.load(fileName: "key.env");
@@ -80,14 +83,14 @@ class HomeState extends State<Home> {
   Widget getSelectedWidget({required int index}) {
     Widget widget;
     switch (index) {
-      case 1:
-        widget = USnewsPage();
+      case 0:
+        widget = HomePage();
         break;
-      case 2:
-        widget = USnewsPage();
+      case 1:
+        widget = THMainNews();
         break;
       default:
-        widget = USnewsPage();
+        widget = USMainNews();
         break;
     }
     return widget;

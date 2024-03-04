@@ -6,11 +6,18 @@ class NewsService {
   List<Map<String, dynamic>> news_data = [];
   String? key = dotenv.env['key'];
 
-  Future<List<Map<String, dynamic>>> fetchNews() async {
-    
-    final response = await http.get(Uri.parse(
-        'https://newsapi.org/v2/top-headlines?country=us&apiKey=${key}'));
+  Future<List<Map<String, dynamic>>> fetchNews(
+      String country, String category) async {
+    // ignore: prefer_typing_uninitialized_variables
+    final response;
 
+    if (category == 'no-category') {
+      response = await http.get(Uri.parse(
+          'https://newsapi.org/v2/top-headlines?country=$country&apiKey=$key'));
+    } else {
+      response = await http.get(Uri.parse(
+          'https://newsapi.org/v2/top-headlines?country=$country&category=$category&apiKey=$key'));
+    }
     if (response.statusCode == 200) {
       final dynamic decodedData = json.decode(utf8.decode(response.bodyBytes));
       if (decodedData is Map<String, dynamic>) {
@@ -22,16 +29,15 @@ class NewsService {
               List<Map<String, dynamic>>.from(decodedData['articles']);
 
           // Filter articles where 'urlToImage' is not null
-          articles = articles
-              .where((article) =>
-                  article.containsKey('urlToImage') &&
-                  article['urlToImage'] != null)
-              .toList();
-
-          for (Map<String, dynamic> article in articles) {
-            print(article['urlToImage']);
+          if (country == 'us') {
+            articles = articles
+                .where((article) =>
+                    article.containsKey('urlToImage') &&
+                    article['urlToImage'] != null)
+                .toList();
           }
 
+          print(articles);
           return articles;
         } else {
           throw Exception('Key "articles" not found in data');

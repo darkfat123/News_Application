@@ -1,23 +1,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:news_application/methods/launcher.dart';
 import 'package:news_application/models/format.dart';
 import 'package:news_application/widgets/gradient_button.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class USDetailPage extends StatelessWidget {
   final Map<String, dynamic> newsItem;
 
   const USDetailPage(this.newsItem, {Key? key}) : super(key: key);
 
-  Future<void> launchInBrowser(Uri url) async {
-    if (!await launchUrl(
-      url,
-      mode: LaunchMode.externalApplication,
-    )) {
-      throw Exception('Could not launch $url');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,17 +69,29 @@ class USDetailPage extends StatelessWidget {
             child: Container(
               height: 500,
               padding: const EdgeInsets.only(top: 140, left: 40, right: 40),
-              color: Colors.white,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.8),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     newsItem['description'],
                     style: const TextStyle(
-                      color: Colors.black,
-                      decoration: TextDecoration.none,
-                      fontSize: 16,
-                    ),
+                        color: Colors.black,
+                        decoration: TextDecoration.none,
+                        fontSize: 16,
+                        height: 2,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.w300),
                   ),
                   GradientButton(
                     onPressed: () {
