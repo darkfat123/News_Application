@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
 import 'package:news_application/methods/launcher.dart';
 import 'package:news_application/models/format.dart';
@@ -31,7 +33,7 @@ class NewsWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     country == 'th'
-                        ? SizedBox.shrink()
+                        ? const SizedBox.shrink()
                         : ClipRRect(
                             borderRadius: BorderRadius.circular(20),
                             child: AspectRatio(
@@ -64,7 +66,7 @@ class NewsWidget extends StatelessWidget {
                     ),
                     const SizedBox(height: 12),
                     country == 'th'
-                        ? SizedBox.shrink()
+                        ? const SizedBox.shrink()
                         : Text(
                             newsItem['description'],
                             style: const TextStyle(

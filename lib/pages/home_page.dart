@@ -1,27 +1,128 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:news_application/widgets/gradient_text.dart';
+import 'package:news_application/main.dart';
+import 'package:news_application/models/for_carousel.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+  TextEditingController _searchController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: GradientText(
-            'หน้าหลัก',
-            style: TextStyle(fontWeight: FontWeight.bold),
-            gradient:
-                LinearGradient(colors: [Color(0xFFFF3A44), Color(0xFFFF8086)]),
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 20),
+                      child: TextField(
+                        controller: _searchController,
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 12),
+                        decoration: const InputDecoration(
+                          contentPadding: EdgeInsets.only(left: 20),
+                          hintText: 'Search...',
+                          hintStyle: TextStyle(color: Colors.grey),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(30)),
+                            borderSide: BorderSide(
+                              color: Color(0xFFFF3A44),
+                            ),
+                          ),
+                          suffixIcon: Icon(Icons.search_outlined, size: 24),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                      margin: const EdgeInsets.only(right: 30),
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(50),
+                        gradient: const LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [Color(0xFFFF3A44), Color(0xFFFF8086)],
+                        ),
+                      ),
+                      child: const Icon(
+                        Icons.notifications_none_outlined,
+                        size: 24,
+                        color: Colors.white,
+                      ))
+                ],
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Lastest News",
+                      style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    TextButton(
+                      child: const Row(
+                        children: [
+                          Text(
+                            "See All",
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.blue),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Icon(
+                            Icons.arrow_forward_rounded,
+                            size: 20,
+                            color: Colors.blue,
+                          )
+                        ],
+                      ),
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Home(
+                                initialIndex:
+                                    2), // Assuming USDetailPage is defined
+                          ),
+                        );
+                      },
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Carousel(),
+              SizedBox(
+                height: 20,
+              ),
+            ],
           ),
         ),
       ),
-      body: Container(
-        padding: EdgeInsets.all(20),
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Text("ข่าวใหม่")])),
     );
   }
 }

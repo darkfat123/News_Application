@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:icons_flutter/icons_flutter.dart';
 import 'package:news_application/pages/home_page.dart';
 import 'package:news_application/pages/th_main_news.dart';
 import 'package:news_application/pages/us_main_news.dart';
 
-
 Future<void> main() async {
-  await dotenv.load(fileName: "key.env");
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -19,10 +17,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'News_Application',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         fontFamily: "IBMPlexSansThai",
       ),
-      home: const Home(initialIndex: 2),
+      home: const Home(initialIndex: 0),
     );
   }
 }
@@ -45,37 +42,72 @@ class HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: index,
-        onTap: (value) {
-          setState(() {
-            index = value;
-          });
-        },
-        backgroundColor: Colors.black,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Elusive.home_circled,size: 20,),
-            label: 'หน้าหลัก',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Elusive.address_book,size: 20,),
-            label: 'ข่าวไทย',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Elusive.reddit,size: 20,),
-            label: 'ข่าวต่างประเทศ',
-            
+      body: Stack(
+        children: [
+          getSelectedWidget(index: index),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              height: 70,
+              margin:
+                  const EdgeInsets.symmetric(horizontal: 80.0, vertical: 40),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 5,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: BottomNavigationBar(
+                  currentIndex: index,
+                  onTap: (value) {
+                    setState(() {
+                      index = value;
+                    });
+                  },
+                  backgroundColor: Colors.white,
+                  selectedIconTheme: const IconThemeData(color: Color(0xFFFF3A44)),
+                  selectedLabelStyle: const TextStyle(color:Colors.black,fontSize: 12),
+                  useLegacyColorScheme: false,
+                  items: const <BottomNavigationBarItem>[
+                    BottomNavigationBarItem(
+                      icon: Padding(
+                        padding: EdgeInsets.only(bottom: 4.0),
+                        child: Icon(Icons.now_widgets_outlined, size: 24),
+                      ),
+                      label: 'Home',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Padding(
+                        padding: EdgeInsets.only(bottom: 4.0),
+                        child: Icon(Icons.flight_land_outlined, size: 24),
+                      ),
+                      label: 'Thai News',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Padding(
+                        padding: EdgeInsets.only(bottom: 4.0),
+                        child: Icon(
+                          Icons.public,
+                          size: 24,
+                        ),
+                      ),
+                      label: 'World News',
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ],
-        selectedItemColor: Colors.white, // Color of the selected label
-        unselectedItemColor: Colors.grey,
-      ),
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        alignment: Alignment.center,
-        child: getSelectedWidget(index: index),
       ),
     );
   }
@@ -84,13 +116,13 @@ class HomeState extends State<Home> {
     Widget widget;
     switch (index) {
       case 0:
-        widget = HomePage();
+        widget =  HomePage();
         break;
       case 1:
-        widget = THMainNews();
+        widget = const THMainNews();
         break;
       default:
-        widget = USMainNews();
+        widget = const USMainNews();
         break;
     }
     return widget;
