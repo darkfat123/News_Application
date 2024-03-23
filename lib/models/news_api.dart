@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class NewsService {
+  // ignore: non_constant_identifier_names
   List<Map<String, dynamic>> news_data = [];
   String? key = dotenv.env['key'];
 
@@ -36,8 +37,6 @@ class NewsService {
                     article['urlToImage'] != null)
                 .toList();
           }
-
-          print(articles);
           return articles;
         } else {
           throw Exception('Key "articles" not found in data');

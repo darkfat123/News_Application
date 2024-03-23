@@ -1,7 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:news_application/main.dart';
 import 'package:news_application/models/for_carousel.dart';
+import 'package:news_application/models/news_home_widget.dart';
+import 'package:news_application/widgets/build_tab.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
@@ -72,7 +73,7 @@ class HomePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      "Lastest News",
+                      "Lastest Top News",
                       style: TextStyle(
                           fontSize: 20,
                           color: Colors.black,
@@ -112,12 +113,63 @@ class HomePage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              Carousel(),
-              SizedBox(
+              const Carousel(),
+              const SizedBox(
                 height: 20,
+              ),
+              SizedBox(
+                // Added Container with height constraint
+                height: MediaQuery.of(context).size.height *
+                    0.6, // You can adjust the height as needed
+                child: const DefaultTabController(
+                  length: 4,
+                  child: Column(
+                    children: [
+                      TabBar(
+                        tabs: [
+                          BuildTab(text: "Technology"),
+                          BuildTab(text: "Health"),
+                          BuildTab(text: "Business"),
+                          BuildTab(text: "Entertainment"),
+                        ],
+                        isScrollable: true,
+                        indicator: BoxDecoration(),
+                        dividerHeight: 0,
+                      ),
+                      Expanded(
+                        child: TabBarView(
+                          children: [
+                            // Widgets for "Top" tab
+                            NewsHomeWidget(
+                              country: 'us',
+                              category: 'technology',
+                            ),
+                            // Widgets for "Health" tab
+                            NewsHomeWidget(
+                              country: 'us',
+                              category: 'health',
+                            ),
+
+                            // Widgets for "Business" tab
+                            NewsHomeWidget(
+                              country: 'us',
+                              category: 'business',
+                            ),
+
+                            // Widgets for "Entertainment" tab
+                            NewsHomeWidget(
+                              country: 'us',
+                              category: 'entertainment',
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
