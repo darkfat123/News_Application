@@ -7,7 +7,7 @@ import 'package:news_application/widgets/build_tab.dart';
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
   HomePage({super.key});
-  TextEditingController _searchController = new TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

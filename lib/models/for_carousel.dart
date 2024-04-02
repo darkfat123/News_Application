@@ -28,7 +28,7 @@ class _CarouselState extends State<Carousel> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // You can return a loading indicator or placeholder here
-          return const Center(child: CircularProgressIndicator());
+          return const Center(child: SizedBox(height: 200,));
         } else if (snapshot.hasError) {
           // Handle error state
           return Text('Error: ${snapshot.error}');
@@ -60,61 +60,59 @@ class _CarouselState extends State<Carousel> {
             final String title = sourceTitle[index];
             final String name = sourceName[index];
             return Container(
-              child: Container(
-                margin: const EdgeInsets.all(5.0),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  child: Stack(
-                    children: <Widget>[
-                      Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(imageUrl),
-                            fit: BoxFit.cover,
-                          ),
+              margin: const EdgeInsets.all(5.0),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                child: Stack(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(imageUrl),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      Positioned(
-                        bottom: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Color.fromARGB(200, 0, 0, 0),
-                                Color.fromARGB(0, 0, 0, 0)
-                              ],
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                            ),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10.0, horizontal: 20.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                name,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12.0,
-                                ),
-                              ),
-                              Text(
-                                title,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
+                    ),
+                    Positioned(
+                      bottom: 0.0,
+                      left: 0.0,
+                      right: 0.0,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color.fromARGB(200, 0, 0, 0),
+                              Color.fromARGB(0, 0, 0, 0)
                             ],
+                            begin: Alignment.bottomCenter,
+                            end: Alignment.topCenter,
                           ),
                         ),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              name,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.0,
+                              ),
+                            ),
+                            Text(
+                              title,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             );

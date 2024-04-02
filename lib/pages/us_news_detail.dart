@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -49,7 +51,7 @@ class USDetailPage extends StatelessWidget {
                           ],
                         ), // Change color and opacity as needed
                         child: IconButton(
-                          icon: Icon(Icons.arrow_back_ios_new_rounded),
+                          icon: const Icon(Icons.arrow_back_ios_new_rounded),
                           onPressed: () {
                             Navigator.pop(context);
                           },
@@ -69,8 +71,8 @@ class USDetailPage extends StatelessWidget {
                 borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(40), topRight: Radius.circular(40)),
                 child: Container(
-                  height: 500,
-                  padding: const EdgeInsets.only(top: 140, left: 40, right: 40),
+                  height:  MediaQuery.of(context).size.height *0.60,
+                  padding: const EdgeInsets.only(top: 140, left: 40, right: 40,bottom: 20),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     boxShadow: [
@@ -90,17 +92,19 @@ class USDetailPage extends StatelessWidget {
                         style: const TextStyle(
                             color: Colors.black,
                             decoration: TextDecoration.none,
-                            fontSize: 16,
+                            fontSize: 14,
                             height: 2,
-                            letterSpacing: 1.2,
+                            letterSpacing: 0.5,
                             fontWeight: FontWeight.w300),
                       ),
+                      const SizedBox(height: 20,),
                       GradientButton(
                         onPressed: () {
                           launchInBrowser(Uri.parse(newsItem['url'].toString()));
                         },
                         text: 'อ่านเพิ่มเติม',
                       ),
+                      
                     ],
                   ),
                 ),

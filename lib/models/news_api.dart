@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 class NewsService {
   // ignore: non_constant_identifier_names
   List<Map<String, dynamic>> news_data = [];
-  String? key = dotenv.env['key'];
+  //String? key = dotenv.env['key'];
+  String key = '2a062b05d3424b8ea2bfc6d1eb328133';
 
   Future<List<Map<String, dynamic>>> fetchNews(
       String country, String category) async {

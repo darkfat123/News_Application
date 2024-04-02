@@ -5,7 +5,7 @@ import 'package:news_application/pages/th_main_news.dart';
 import 'package:news_application/pages/us_main_news.dart';
 
 Future<void> main() async {
-  await dotenv.load(fileName: ".env");
+  //await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 

@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
 import 'package:flutter/material.dart';
+import 'package:news_application/models/format.dart';
 import 'package:news_application/models/news_api.dart';
 
 class NewsHomeWidget extends StatelessWidget {
@@ -67,14 +68,70 @@ class NewsHomeWidget extends StatelessWidget {
                                         shadows: [
                                           Shadow(
                                             blurRadius: 4.0, // shadow blur
-                                            color:
-                                                Colors.black, // shadow color
+                                            color: Colors.black, // shadow color
                                             offset: Offset(2.0,
                                                 2.0), // how much shadow will be shown
                                           ),
                                         ],
                                       ),
                                     ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              bottom: 0.0,
+                              left: 0.0,
+                              right: 0.0,
+                              child: Container(
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color.fromARGB(200, 0, 0, 0),
+                                      Color.fromARGB(0, 0, 0, 0)
+                                    ],
+                                    begin: Alignment.bottomCenter,
+                                    end: Alignment.topCenter,
+                                  ),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 10.0, horizontal: 20.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      newsItem['author'] ?? newsItem['source']['name'],
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.0,
+                                        shadows: [
+                                          Shadow(
+                                            blurRadius: 4.0, // shadow blur
+                                            color: Colors.black, // shadow color
+                                            offset: Offset(2.0,
+                                                2.0), // how much shadow will be shown
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Text(
+                                      formatDate(newsItem['publishedAt']),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 12.0,
+                                        shadows: [
+                                          Shadow(
+                                            blurRadius: 4.0, // shadow blur
+                                            color: Colors.black, // shadow color
+                                            offset: Offset(2.0,
+                                                2.0), // how much shadow will be shown
+                                          ),
+                                        ],
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),
